@@ -19,14 +19,20 @@ public class CharacterController : MonoBehaviour
 		// Move the character based on the input
 		player.transform.position = player.transform.position + direction * speed * Time.deltaTime;
 
-		// Get the mouse position in world space
-		Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		// Get the mouse position in screen space
+		Vector3 mousePosition = Input.mousePosition;
+
+		// Convert the mouse position from screen space to world space
+		mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
 		// Set the y and x coordinates of the mouse position to 0 to constrain the rotation to the z axis
-		mousePosition.y = 0;
-		mousePosition.x = 0;
+		//mousePosition.y = 0;
+		//mousePosition.x = 0;
+		mousePosition.z = 0;
 
 		// Rotate the player towards the mouse position on the z axis
 		player.transform.LookAt(mousePosition, Vector3.forward);
+
+		player.transform.eulerAngles = new Vector3(0, 0, player.transform.eulerAngles.z + 180);
 	}
 }
